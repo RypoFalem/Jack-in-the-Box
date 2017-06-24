@@ -1,0 +1,6 @@
+name: JackInTheBox
+description: Baby zombies jump out of loot chests in the resource world
+author: RypoFalem
+version: 0.1
+main: io.github.rypofalem.jackinthebox.JackInTheBoxPlugin
+depend: [ Exploits ]

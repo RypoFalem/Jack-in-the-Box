@@ -1,0 +1,4 @@
+worlds:
+  - Resource
+spawnChance: .05
+helmetDropChance: 1
