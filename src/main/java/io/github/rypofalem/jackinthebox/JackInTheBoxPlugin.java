@@ -45,28 +45,22 @@ public class JackInTheBoxPlugin extends JavaPlugin implements Listener{
 	public void onChestOpen(InventoryOpenEvent e){
 		if(!(e.getInventory().getHolder() instanceof Chest)) return;
 		Chest chest = (Chest) e.getInventory().getHolder();
-		if(!isGoodWorld(chest.getWorld())) return;
+		if(worlds.contains(chest.getWorld())) return;
 		if(BukkitExploits.getInstance().isPlayerPlaced(chest.getLocation())) return;
 		BukkitExploits.getInstance().setPlayerPlaced(chest.getLocation(), true);
 		if(popChance <= random.nextDouble()) return;
 
 		Location location = chest.getLocation().clone().add(.5, .5, .5);
 		location.setDirection(e.getPlayer().getEyeLocation().toVector().subtract(location.toVector()));
-		Zombie zombie = (Zombie) chest.getWorld().spawnEntity(location, EntityType.ZOMBIE);
-		zombie.getEquipment().setHelmet(new ItemStack(Material.JACK_O_LANTERN));
-		zombie.getEquipment().setHelmetDropChance(helmetDropChance);
-		zombie.setCustomName("Jack in the Box");
-		zombie.setRemoveWhenFarAway(true);
-		zombie.setBaby(true);
-		Vector velocity = location.getDirection().normalize().multiply(.3).setY(.66);
-		zombie.setVelocity(velocity);
-		zombie.setTarget(e.getPlayer());
-	}
-
-	private boolean isGoodWorld(World world){
-		for(String w : worlds){
-			if(world.getName().equals(w)) return true;
-		}
-		return false;
+		chest.getWorld().spawn(location, Zombie.class, zombie -> {
+			zombie.getEquipment().setHelmet(new ItemStack(Material.JACK_O_LANTERN));
+			zombie.getEquipment().setHelmetDropChance(helmetDropChance);
+			zombie.setCustomName("Jack-in-the-Box");
+			zombie.setRemoveWhenFarAway(true);
+			zombie.setBaby(true);
+			Vector velocity = location.getDirection().normalize().multiply(.3).setY(.66);
+			zombie.setVelocity(velocity);
+			zombie.setTarget(e.getPlayer());
+		});
 	}
 }
