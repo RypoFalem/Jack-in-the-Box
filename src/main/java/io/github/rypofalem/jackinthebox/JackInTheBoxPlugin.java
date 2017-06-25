@@ -58,7 +58,7 @@ public class JackInTheBoxPlugin extends JavaPlugin implements Listener{
 			zombie.setCustomName("Jack-in-the-Box");
 			zombie.setRemoveWhenFarAway(true);
 			zombie.setBaby(true);
-			Vector velocity = location.getDirection().normalize().multiply(.3).setY(.66);
+			Vector velocity = location.getDirection().normalize().multiply(.3).setY(.5);
 			zombie.setVelocity(velocity);
 			zombie.setTarget(e.getPlayer());
 		});
